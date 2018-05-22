@@ -118,15 +118,10 @@ public class WEcAGSED {
 									decTotalElapse = decTotalElapse + (msafter - msbefore);
 								}
 							} else {
+								encrypt = eaes.GCM_encrypt(original);
 								for (int i = 0; i < testTimes; i++) {
-									msbefore = getCurrentTime();
-									encrypt = eaes.GCM_encrypt(original);
-									msafter = getCurrentTime();
-									encTotalElapse = encTotalElapse + (msafter - msbefore);
-									msbefore = getCurrentTime();
-									decrypt = eaes.GCM_decrypt(encrypt);
-									msafter = getCurrentTime();
-									decTotalElapse = decTotalElapse + (msafter - msbefore);
+									encTotalElapse = encTotalElapse + eaes.GCM_encrypt_test(original);
+									decTotalElapse = decTotalElapse + eaes.GCM_decrypt_test(encrypt);
 								}
 							}
 							float encResult = (float)encTotalElapse / (float)testTimes;

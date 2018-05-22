@@ -1,6 +1,7 @@
 
 
 import java.security.SecureRandom;
+import java.util.Date;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
@@ -174,6 +175,26 @@ public class EasyAES {
 		}
 	}
 	
+	public long GCM_encrypt_test(byte[] data) throws Exception {
+		if (data == null) {
+			System.err.println("[EasyAES] No input data for GCM_encrypt_test, nothing to do.");
+			return 0;
+		}
+		if (checkParam() > 1) {
+			final Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+			final GCMParameterSpec gcmSpec = new GCMParameterSpec(128, nonce);
+			final SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+			Date today = new Date();
+			long msbefore = today.getTime();
+			cipher.init(Cipher.ENCRYPT_MODE, keySpec, gcmSpec);
+			today = new Date();
+			long msafter = today.getTime();
+			return msafter - msbefore;
+		} else {
+			return 0;
+		}
+	}
+	
 	public byte[] GCM_decrypt(byte[] gcmCipher) throws Exception {
 		if (gcmCipher == null) {
 			System.err.println("[EasyAES] No input data for GCM decrypt, nothing to do.");
@@ -188,7 +209,25 @@ public class EasyAES {
 		} else {
 			return null;
 		}
-		
+	}
+	
+	public long GCM_decrypt_test(byte[] gcmCipher) throws Exception {
+		if (gcmCipher == null) {
+			System.err.println("[EasyAES] No input data for GCM_decrypt_test, nothing to do.");
+			return 0;
+		}
+		if (checkParam() > 1) {
+			final Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+			final GCMParameterSpec gcmSpec = new GCMParameterSpec(128, nonce);
+			final SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+			Date today = new Date();
+			long msbefore = today.getTime();
+			cipher.init(Cipher.DECRYPT_MODE, keySpec, gcmSpec);
+			today = new Date();
+			long msafter = today.getTime();
+			return msafter - msbefore;
+		}
+		return 0;
 	}
 	
 	private int checkParam() {
