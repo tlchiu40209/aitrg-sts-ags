@@ -11,5 +11,3 @@ Software Environment:
 Eclipse Configuration:
   - JDK Compliance Level: 1.8
 
-180517:
-  - The program is under inspection of performance issues. Please wait for later version. 
